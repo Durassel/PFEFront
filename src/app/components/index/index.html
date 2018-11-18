@@ -1,3 +1,57 @@
-<div class="container jumbotron py-4">
-    <h1>{{ "LOGIN_TEST" | translate }}</h1>
+<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Voxel</a>
+  <ul class="navbar-nav px-3">
+    <li class="nav-item text-nowrap">
+      <a class="nav-link" href="#">Sign in</a>
+    </li>
+  </ul>
+</nav>
+
+<div class="container-fluid global-container">
+  <div class="row">
+    <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+      <div class="sidebar-sticky">
+        <!-- <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="file"></span>
+              Settings <span class="sr-only">(current)</span>
+            </a>
+          </li>
+        </ul> -->
+
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+          <span>Users</span>
+        </h6>
+        <ul class="nav flex-column mb-2">
+          <li class="nav-item" ng-repeat="user in iwc.users">
+            <a class="nav-link" href="#" ng-click="iwc.clickUser(user)">
+              <span data-feather="file-text"></span>
+              {{ user.idUser }}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Dashboard</h1>
+      </div>
+      <div class="row">
+        <div class="col-md-12" ng-show="iwc.user">
+          <p>ID User : {{ iwc.user.idUser }}</p>
+          <p>ID Gilet : {{ iwc.user.giletid }}</p>
+          <p>ID Manager : {{ iwc.user.idManager }}</p>
+        </div>
+        <div class="col-md-12" ng-show="iwc.user_data">
+          <div ng-repeat="data in iwc.user_data">
+            <p>Date : {{ data.date }}</p>
+            <p>Type ID : {{ data.typeId }}</p>
+            <p>Sensors : {{ data.sensors }}</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
 </div>

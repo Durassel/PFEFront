@@ -1,12 +1,10 @@
-let app_config = function($compileProvider, $stateProvider, $urlRouterProvider, $httpProvider, GlobalConfigFactoryProvider, 
-    $translateProvider, $translatePartialLoaderProvider) {
+let app_config = function($compileProvider, $stateProvider, $urlRouterProvider, $httpProvider, GlobalConfigFactoryProvider, $translateProvider, $translatePartialLoaderProvider) {
 
     const index_state = {
         "name": "index",
         "url": "/index",
         "component": "index"
     };
-
 
     $stateProvider
         .state(index_state)
@@ -24,10 +22,8 @@ let app_config = function($compileProvider, $stateProvider, $urlRouterProvider, 
 
     // Add the interceptor to the $httpProvider.
     $httpProvider.interceptors.push('HttpErrorInterceptorFactory');
-
 };
 
-app_config.$inject = ["$compileProvider", "$stateProvider", "$urlRouterProvider","$httpProvider",
-    "GlobalConfigFactoryProvider", "$translateProvider", "$translatePartialLoaderProvider"];
+app_config.$inject = ["$compileProvider", "$stateProvider", "$urlRouterProvider", "$httpProvider", "GlobalConfigFactoryProvider", "$translateProvider", "$translatePartialLoaderProvider"];
 
 module.exports = app_config;
