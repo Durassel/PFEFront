@@ -12,11 +12,10 @@ let index_controller = function indexController($http, $state, GlobalConfigFacto
   // self.loginClose = function() {
   // 	self.login = false;
   // }
-
   $http.get(self.url + 'users/').then((response) => {
     self.users = response.data
   })
-
+  
   self.clickUser = function(user) {
     self.user = user
 

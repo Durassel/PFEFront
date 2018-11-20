@@ -7,19 +7,21 @@ require('ng-file-upload');
 
 require("./components/shared/shared.module");
 require("./components/index/index.module");
-
+require("./components/login/login.module");
+require("./components/settings/settings.module");
 const global_config_factory = require("./global-config.factory");
 const app_config = require("./app.config");
 const http_error_interceptor_factory = require("./http-error-interceptor.factory");
 const alert_service = require("./alert-service.factory");
 
 console.log(http_error_interceptor_factory);
-
 angular.module("App", [
     "ui.router",
     "pascalprecht.translate",
     "SharedModule",
-    "IndexModule"
+    "IndexModule",
+    "LoginModule",
+    "SettingsModule"
     ]
 )
     .factory("GlobalConfigFactory", global_config_factory)

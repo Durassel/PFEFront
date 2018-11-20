@@ -6,11 +6,25 @@ let app_config = function($compileProvider, $stateProvider, $urlRouterProvider, 
         "component": "index"
     };
 
+    const login_state = {
+        "name": "login",
+        "url": "/login",
+        "component": "login"
+    };
+
+    const settings_state = {
+        "name": "settings",
+        "url": "/settings",
+        "component": "settings"
+    };
+
     $stateProvider
         .state(index_state)
+        .state(login_state)
+        .state(settings_state)
 
     $urlRouterProvider.otherwise("/index");
-
+    
     // Config  I18N
     $translateProvider.useSanitizeValueStrategy('escape');
     $translateProvider.useLoader("$translatePartialLoader",{
