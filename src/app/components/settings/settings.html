@@ -2,7 +2,7 @@
   <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Voxel</a>
   <ul class="navbar-nav px-3">
     <li class="nav-item text-nowrap">
-      <a class="nav-link" href="#">Home</a>
+      <a class="nav-link" href="#!/index">Home</a>
     </li>
   </ul>
 </nav>
@@ -42,8 +42,19 @@
               <span data-feather="file-text"></span>
               Modify User
             </a>
-          </li>
+            </li>
           </div>
+          <li class="nav-item">
+            <a class="nav-link" href="" ng-click="stg.clickPassword()">
+              <span data-feather="file-text"></span>
+              <div ng-if="stg.job === 0">
+                Change password
+              </div>
+              <div ng-if="stg.job === 2">
+                Change your password
+              </div>
+            </a>
+          </li>
         </ul>
       </div>
     </nav>

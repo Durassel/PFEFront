@@ -29,6 +29,15 @@ let settings_controller = function settingsController($http, $state, GlobalConfi
     self.field = ["idUser","giletid"]
   }
 
+  self.clickPassword = function() {
+    self.action= 5
+    if(self.job === 0){
+       self.field = ["idUser","password"]
+    }
+    else{
+      self.field = ["password"]
+    }
+  }
    self.submit = function() {
     let data
     let url =""
@@ -76,6 +85,16 @@ let settings_controller = function settingsController($http, $state, GlobalConfi
                   sender: self.job //to make sure that staff cannot erase everybody
                 }
       url ='users/chgGilet'
+    }
+    else if(self.action === 5)
+    {
+      method = 'PUT'
+      data = {
+                  idUser: self.data.idUser,
+                  password: self.data.password,
+                  sender: self.job //to make sure that staff cannot erase everybody
+                }
+      url ='users/chgPassword'
     }
      $http({
       method: method,

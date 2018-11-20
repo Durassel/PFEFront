@@ -21,6 +21,7 @@ let login_controller = function loginController($http, $state, $scope, GlobalCon
       	if(response.data.login)
       	{
         	self.name = name
+          self.job = response.data.job
         	$window.location.href = '/#!/index';
       	}
         else
