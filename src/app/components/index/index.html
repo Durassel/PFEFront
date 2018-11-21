@@ -47,8 +47,23 @@
         <div class="col-md-12" ng-show="iwc.user_data">
           <div ng-repeat="data in iwc.user_data">
             <p>Date : {{ data.date }}</p>
-            <p>Type ID : {{ data.typeId }}</p>
-            <p>Sensors : {{ data.sensors }}</p>
+            <p><b>Sensor type : </b> {{ data.typeId }}</p>
+            <p>Sensors : </p>
+            <p ng-if="data.typeid === '000'">
+              <ul class="row">
+                <li class="col">
+                  <p>X1: {{data.sensors[0].x1}} </p>
+                  <p>Y1: {{data.sensors[0].y1}} </p>
+                  <p>Z1: {{data.sensors[0].z1}} </p>
+                </li>
+                <li class="col">
+                  <p>X2: {{data.sensors[0].x2}} </p>
+                  <p>Y2: {{data.sensors[0].y2}} </p>
+                  <p>Z2: {{data.sensors[0].z2}} </p>
+                </li>
+
+              </ul>
+            </p>
           </div>
         </div>
       </div>
