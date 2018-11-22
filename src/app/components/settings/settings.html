@@ -28,7 +28,7 @@
               Delete User
             </a>
           </li>
-          <div ng-if="stg.job === 2">
+          <div ng-if="stg.job === '2'">
             <li class="nav-item">
             <a class="nav-link" href="" ng-click="stg.clickGilet()">
               <span data-feather="file-text"></span>
@@ -36,7 +36,7 @@
             </a>
           </li>
           </div>
-          <div ng-if="stg.job === 0">
+          <div ng-if="stg.job === '0'">
             <li class="nav-item">
             <a class="nav-link" href="" ng-click="stg.clickModUser()">
               <span data-feather="file-text"></span>
@@ -47,10 +47,10 @@
           <li class="nav-item">
             <a class="nav-link" href="" ng-click="stg.clickPassword()">
               <span data-feather="file-text"></span>
-              <div ng-if="stg.job === 0">
+              <div ng-if="stg.job === '0'">
                 Change password
               </div>
-              <div ng-if="stg.job === 2">
+              <div ng-if="stg.job === '2'">
                 Change your password
               </div>
             </a>

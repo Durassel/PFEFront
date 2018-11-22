@@ -1,9 +1,12 @@
 "use strict";
 
-let settings_controller = function settingsController($http, $state, GlobalConfigFactory, $element) {
+let settings_controller = function settingsController($http, $state, GlobalConfigFactory, $element, $window) {
   let self = this;
+
   self.url = GlobalConfigFactory.url_back;
-  self.job = 2
+  self.job = $window.sessionStorage.getItem("job");
+  self.idUser = $window.sessionStorage.getItem("idUser");
+
   self.clickModUser = function() {
     self.action=1
     self.field = ["idUser","giletid","job"]
@@ -11,7 +14,7 @@ let settings_controller = function settingsController($http, $state, GlobalConfi
 
   self.clickAdd = function() {
     self.action=2
-    if(self.job === 0){
+    if(self.job === '0'){
        self.field = ["idUser","giletid","job"]
     }
     else{
@@ -31,7 +34,7 @@ let settings_controller = function settingsController($http, $state, GlobalConfi
 
   self.clickPassword = function() {
     self.action= 5
-    if(self.job === 0){
+    if(self.job === '0'){
        self.field = ["idUser","password"]
     }
     else{
@@ -88,11 +91,19 @@ let settings_controller = function settingsController($http, $state, GlobalConfi
     }
     else if(self.action === 5)
     {
+      let id
+      if(self.job === 0){
+        id = self.data.idUser
+      }
+      else if(self.job ===2){
+        id = self.idUser
+      }
+
       method = 'PUT'
       data = {
-                  idUser: self.data.idUser,
+                  idUser: id,
                   password: self.data.password,
-                  sender: self.job //to make sure that staff cannot erase everybody
+                  sender: self.job //to make sure that staff cannot change everything
                 }
       url ='users/chgPassword'
     }
@@ -112,7 +123,7 @@ let settings_controller = function settingsController($http, $state, GlobalConfi
 
 };
 
-settings_controller.$inject = ['$http', '$state', 'GlobalConfigFactory', '$element'];
+settings_controller.$inject = ['$http', '$state', 'GlobalConfigFactory', '$element','$window'];
 
 let settings = {
     templateUrl: 'app/components/settings/settings.html',

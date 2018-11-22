@@ -19,8 +19,8 @@ let login_controller = function loginController($http, $state, $scope, GlobalCon
     }).then((response) => {
       if (response.status === 200) {
       	if (response.data) {
-        	self.name = name
-          self.job = response.data.job
+          $window.sessionStorage.setItem("idUser",name);
+          $window.sessionStorage.setItem("job",response.data.login);
         	$window.location.href = '/#!/index';
       	} else {
         	alert("error")
