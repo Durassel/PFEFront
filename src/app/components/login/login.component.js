@@ -18,15 +18,13 @@ let login_controller = function loginController($http, $state, $scope, GlobalCon
       }
     }).then((response) => {
       if (response.status === 200) {
-      	if(response.data.login)
-      	{
+      	if (response.data) {
         	self.name = name
           self.job = response.data.job
         	$window.location.href = '/#!/index';
-      	}
-        else
+      	} else {
         	alert("error")
-        console.log("response: ",response)
+        }
       }
     })
   }

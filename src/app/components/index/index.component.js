@@ -25,32 +25,32 @@ let index_controller = function indexController($http, $state, GlobalConfigFacto
   }
 
   // Test du set de data
-  // $http({
-  //   method: 'POST',
-  //   url: self.url + 'data/set',
-  //   data: {
-  //     "giletid":"0123456789",
-  //     "global":[{
-  //       "date":"2018-12-22",
-  //       "data":[{
-  //         "typeId":"000",
-  //         "sensors":{
-  //           "x1":"8",
-  //           "y1":"0",
-  //           "z1":"3",
-  //           "x2":"9",
-  //           "y2":"4",
-  //           "z2":"1"
-  //         }
-  //       }]
-  //     }]
-  //   },
-  //   headers: {
-  //     'Content-Type': 'application/json'
-  //   }
-  // }).then((response) => {
-  //   console.log(response)
-  // })
+//   $http({
+//     method: 'POST',
+//     url: self.url + 'data/set',
+//     data: {
+//       "giletid":"0123456789",
+//       "global":[{
+//         "date":"2018-12-22",
+//         "data":[{
+//           "typeId":"000",
+//           "sensors":{
+//             "x1":"8",
+//             "y1":"0",
+//             "z1":"3",
+//             "x2":"9",
+//             "y2":"4",
+//             "z2":"1"
+//           }
+//         }]
+//       }]
+//     },
+//     headers: {
+//       'Content-Type': 'application/json'
+//     }
+//   }).then((response) => {
+//     console.log(response)
+//   })
 };
 
 index_controller.$inject = ['$http', '$state', 'GlobalConfigFactory', '$element'];
