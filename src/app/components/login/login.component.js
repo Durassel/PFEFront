@@ -6,9 +6,11 @@ let login_controller = function loginController($http, $state, $scope, GlobalCon
 
   self.submit = function() {
     
-     $http({
+    console.log("TEST")
+    $http({
       method: 'POST',
-      url: self.url + 'users/userLogin/',
+      url: self.url + 'users/userLogin',
+      crossDomain: true,
       data: {
         idUser: $scope.name,
         password:  $scope.password
@@ -17,14 +19,11 @@ let login_controller = function loginController($http, $state, $scope, GlobalCon
         'Content-Type': 'application/json'
       }
     }).then((response) => {
-      if (response.status === 200) {
-      	if (response.data) {
-          $window.sessionStorage.setItem("idUser",name);
-          $window.sessionStorage.setItem("job",response.data.login);
-        	$window.location.href = '/#!/index';
-      	} else {
-        	alert("error")
-        }
+    	if (response.data) {
+      	$window.location.href = '/#!/index';
+    	} else {
+        console.log("Error")
+      	self.error = "An error occurred. Invalid credentials."
       }
     })
   }
