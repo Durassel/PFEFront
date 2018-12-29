@@ -4,33 +4,29 @@ let login_controller = function loginController($http, $state, $scope, GlobalCon
   let self = this;
   self.url = GlobalConfigFactory.url_back;
 
+  // Check user authentication
+  $http.get(self.url + 'users/authrequired').then((response) => {
+    if (JSON.parse(response.data)) {
+      $window.location.href = '/#!/index';
+    }
+  })
+
   self.submit = function() {
-    
-    console.log("TEST")
-    $http({
-      method: 'POST',
-      url: self.url + 'users/userLogin',
-      crossDomain: true,
-      data: {
-        idUser: $scope.name,
-        password:  $scope.password
-      },
-      headers: {
-        'Content-Type': 'application/json'
-      }
+    $http.post(self.url + 'users/login', {
+      idUser: $scope.name,
+      password: $scope.password
     }).then((response) => {
     	if (response.data) {
+        $window.localStorage.setItem("user", JSON.stringify(response.data))
       	$window.location.href = '/#!/index';
     	} else {
-        console.log("Error")
       	self.error = "An error occurred. Invalid credentials."
       }
     })
   }
-
 };
 
-login_controller.$inject = ['$http', '$state', '$scope' ,'GlobalConfigFactory','$window'];
+login_controller.$inject = ['$http', '$state', '$scope', 'GlobalConfigFactory', '$window'];
 
 let login = {
     templateUrl: 'app/components/login/login.html',

@@ -1,8 +1,11 @@
 <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-  <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Voxel</a>
+  <a class="navbar-brand col-sm-3 col-md-2 mr-0 cursor text-white" ng-click="stg.clickIndex()">Voxel</a>
   <ul class="navbar-nav px-3">
     <li class="nav-item text-nowrap">
       <a class="nav-link" href="#!/index">Home</a>
+    </li>
+    <li class="nav-item text-nowrap">
+      <a class="nav-link cursor" ng-click="stg.logout()">Logout</a>
     </li>
   </ul>
 </nav>
@@ -16,41 +19,41 @@
           <span>Parameters</span>
         </h6>
         <ul class="nav flex-column mb-2">
-          <li class="nav-item">
-            <a class="nav-link" href="" ng-click="stg.clickAdd()">
-              <span data-feather="file-text"></span>
-              Add User
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="" ng-click="stg.clickDel()">
-              <span data-feather="file-text"></span>
-              Delete User
-            </a>
-          </li>
-          <div ng-if="stg.job === '2'">
+          <div ng-if="stg.user.job === '0'">
             <li class="nav-item">
-            <a class="nav-link" href="" ng-click="stg.clickGilet()">
-              <span data-feather="file-text"></span>
-              Change Gilet
-            </a>
-          </li>
-          </div>
-          <div ng-if="stg.job === '0'">
-            <li class="nav-item">
-            <a class="nav-link" href="" ng-click="stg.clickModUser()">
+            <a class="nav-link" href="" ng-click="stg.clickAction(1)">
               <span data-feather="file-text"></span>
               Modify User
             </a>
             </li>
           </div>
           <li class="nav-item">
-            <a class="nav-link" href="" ng-click="stg.clickPassword()">
+            <a class="nav-link" href="" ng-click="stg.clickAction(2)">
               <span data-feather="file-text"></span>
-              <div ng-if="stg.job === '0'">
+              Add User
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="" ng-click="stg.clickAction(3)">
+              <span data-feather="file-text"></span>
+              Delete User
+            </a>
+          </li>
+          <div ng-if="stg.user.job === '2'"> 
+            <li class="nav-item">
+            <a class="nav-link" href="" ng-click="stg.clickAction(4)">
+              <span data-feather="file-text"></span>
+              Change Gilet
+            </a>
+          </li>
+          </div>
+          <li class="nav-item">
+            <a class="nav-link" href="" ng-click="stg.clickAction(5)">
+              <span data-feather="file-text"></span>
+              <div ng-if="stg.user.job === '0'">
                 Change password
               </div>
-              <div ng-if="stg.job === '2'">
+              <div ng-if="stg.user.job === '2'">
                 Change your password
               </div>
             </a>
@@ -63,13 +66,68 @@
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Dashboard</h1>
       </div>
-      <div class="row"><!--form-group-->
-        <div class="col-md-12" ng-show="stg.field">
-            <div ng-repeat="field in stg.field">
-              <label>{{field}}: </label>
-              <input type="text" ng-model=stg.data[field]></input>
-            </div>
-            <button type="submit" class="btn btn-primary" ng-click="stg.submit()">Submit</button>
+      <div class="row">
+        <div class="col-md-12 alert alert-danger" role="alert" ng-show="stg.error">
+          {{ stg.error }}
+        </div>
+
+        <div class="col-md-12 alert alert-success" role="alert" ng-show="stg.success">
+          {{ stg.success }}
+        </div>
+
+        <div class="col-md-12 form-group" ng-show="stg.action === 1">
+          <label>ID user: </label>
+          <select class="form-control" ng-model="stg.data.id" ng-change="stg.userChg()">
+            <option ng-repeat="user in stg.users" ng-if="user.job === '1'" value="{{ user._id }}">{{ user.idUser }}</option>
+          </select>
+
+          <label>Gilet ID: </label>
+          <input type="text" class="form-control" ng-model="stg.data.gilet"></input>
+
+          <label>Job : </label>
+          <select class="form-control" ng-model="stg.data.job">
+            <option ng-repeat="job in stg.jobs" value="{{ job.job }}">{{ job.name }}</option>
+          </select>
+        </div>
+
+        <div class="col-md-12" ng-show="stg.action === 2">
+          <label>ID user: </label>
+          <input type="text" class="form-control" ng-model="stg.data.user"></input>
+
+          <label>Gilet ID: </label>
+          <input type="text" class="form-control" ng-model="stg.data.gilet"></input>
+
+          <label>Job : </label>
+          <select class="form-control" ng-model="stg.data.job">
+            <option ng-repeat="job in stg.jobs" value="{{ job.job }}">{{ job.name }}</option>
+          </select>
+        </div>
+
+        <div class="col-md-12" ng-show="stg.action === 3">
+          <label>ID user: </label>
+          <select class="form-control" ng-model="stg.data.id" ng-change="stg.userChg()">
+            <option ng-repeat="user in stg.users" ng-if="user.job === '1'" value="{{ user._id }}">{{ user.idUser }}</option>
+          </select>
+        </div>
+
+        <div class="col-md-12" ng-show="stg.action === 4">
+          <label>ID user: </label>
+          <select class="form-control" ng-model="stg.data.id" ng-change="stg.userChg()">
+            <option ng-repeat="user in stg.users" ng-if="user.job === '1'" value="{{ user._id }}">{{ user.idUser }}</option>
+          </select>
+
+          <label>Gilet ID: </label>
+          <input type="text" class="form-control" ng-model="stg.data.gilet"></input>
+        </div>
+
+        <div class="col-md-12" ng-show="stg.action === 5">
+          <label>Password: </label>
+          <input type="text" class="form-control" ng-model="stg.data.spassword"></input>
+        </div>
+
+        <div class="col-md-12" ng-if="stg.action !== null">
+          <label></label>
+          <button type="button" class="btn btn-success btn-lg btn-block" ng-click="stg.submit()">Submit</button>
         </div>
       </div>
     </main>

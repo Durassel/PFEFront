@@ -1,6 +1,6 @@
 "use strict";
 
-let index_controller = function indexController($http, $state, GlobalConfigFactory, $element) {
+let index_controller = function indexController($http, $state, GlobalConfigFactory, $element, $window) {
   let self = this;
   self.url = GlobalConfigFactory.url_back;
   // self.login = false;
@@ -12,10 +12,34 @@ let index_controller = function indexController($http, $state, GlobalConfigFacto
   // self.loginClose = function() {
   // 	self.login = false;
   // }
-  $http.get(self.url + 'users/').then((response) => {
-    self.users = response.data
+
+  // Check user authentication
+  $http.get(self.url + 'users/authrequired').then((response) => {
+    if (!JSON.parse(response.data)) {
+      $window.location.href = '/#!/login';
+    }
+
+    $http.get(self.url + 'users').then((response) => {
+      self.users = response.data
+    })
   })
+
+  self.clickIndex = function() {
+    $window.location.href = '/#!/index';
+  }
+
+  // Click on logout button
+  self.logout = function() {
+    $http.get(self.url + 'users/logout').then((response) => {
+      console.log("Response : ", JSON.parse(response.data))
+
+      if (JSON.parse(response.data)) {
+        $window.location.href = '/#!/login';
+      }
+    })
+  }
   
+  // Click on a user
   self.clickUser = function(user) {
     self.user = user
 
@@ -53,7 +77,7 @@ let index_controller = function indexController($http, $state, GlobalConfigFacto
 //   })
 };
 
-index_controller.$inject = ['$http', '$state', 'GlobalConfigFactory', '$element'];
+index_controller.$inject = ['$http', '$state', 'GlobalConfigFactory', '$element', '$window'];
 
 let index = {
     templateUrl: 'app/components/index/index.html',

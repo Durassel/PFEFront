@@ -1,15 +1,14 @@
 let app_config = function($compileProvider, $stateProvider, $urlRouterProvider, $httpProvider, GlobalConfigFactoryProvider, $translateProvider, $translatePartialLoaderProvider) {
+    const login_state = {
+        "name": "login",
+        "url": "/login",
+        "component": "login"
+    };
 
     const index_state = {
         "name": "index",
         "url": "/index",
         "component": "index"
-    };
-
-    const login_state = {
-        "name": "login",
-        "url": "/login",
-        "component": "login"
     };
 
     const settings_state = {
@@ -19,11 +18,11 @@ let app_config = function($compileProvider, $stateProvider, $urlRouterProvider, 
     };
 
     $stateProvider
-        .state(index_state)
         .state(login_state)
+        .state(index_state)
         .state(settings_state)
 
-    $urlRouterProvider.otherwise("/index");
+    $urlRouterProvider.otherwise("/login");
     
     // Config  I18N
     $translateProvider.useSanitizeValueStrategy('escape');
@@ -36,6 +35,11 @@ let app_config = function($compileProvider, $stateProvider, $urlRouterProvider, 
 
     // Add the interceptor to the $httpProvider.
     $httpProvider.interceptors.push('HttpErrorInterceptorFactory');
+    
+    // CORS options necessary to enable session cookie
+    $httpProvider.defaults.useXDomain = true;
+    $httpProvider.defaults.withCredentials = true;
+    delete $httpProvider.defaults.headers.common['X-Requested-With'];
 };
 
 app_config.$inject = ["$compileProvider", "$stateProvider", "$urlRouterProvider", "$httpProvider", "GlobalConfigFactoryProvider", "$translateProvider", "$translatePartialLoaderProvider"];
