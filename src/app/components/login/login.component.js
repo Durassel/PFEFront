@@ -13,7 +13,7 @@ let login_controller = function loginController($http, $state, $scope, GlobalCon
 
   self.submit = function() {
     $http.post(self.url + 'users/login', {
-      idUser: $scope.name,
+      username: $scope.username,
       password: $scope.password
     }).then((response) => {
     	if (response.data) {

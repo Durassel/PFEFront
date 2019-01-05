@@ -3,15 +3,6 @@
 let index_controller = function indexController($http, $state, GlobalConfigFactory, $element, $window) {
   let self = this;
   self.url = GlobalConfigFactory.url_back;
-  // self.login = false;
-
-  // self.loginClick = function() {
-  // 	self.login = true;
-  // }
-
-  // self.loginClose = function() {
-  // 	self.login = false;
-  // }
 
   // Check user authentication
   $http.get(self.url + 'users/authrequired').then((response) => {
@@ -19,7 +10,7 @@ let index_controller = function indexController($http, $state, GlobalConfigFacto
       $window.location.href = '/#!/login';
     }
 
-    $http.get(self.url + 'users').then((response) => {
+    $http.get(self.url + 'users/job/Member').then((response) => { // users/all to have all users
       self.users = response.data
     })
   })
@@ -31,8 +22,6 @@ let index_controller = function indexController($http, $state, GlobalConfigFacto
   // Click on logout button
   self.logout = function() {
     $http.get(self.url + 'users/logout').then((response) => {
-      console.log("Response : ", JSON.parse(response.data))
-
       if (JSON.parse(response.data)) {
         $window.location.href = '/#!/login';
       }
@@ -42,9 +31,12 @@ let index_controller = function indexController($http, $state, GlobalConfigFacto
   // Click on a user
   self.clickUser = function(user) {
     self.user = user
-
-    $http.get(self.url + 'data/' + user.idUser).then((response) => {
+    $http.get(self.url + 'data/user/' + user.username).then((response) => {
       self.user_data = response.data
+    })
+
+    $http.get(self.url + 'jackets/user/' + user._id).then((response) => {
+      self.user.jacket = response.data
     })
   }
 

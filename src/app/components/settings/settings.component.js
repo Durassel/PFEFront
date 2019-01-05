@@ -8,13 +8,7 @@ let settings_controller = function settingsController($http, $state, GlobalConfi
   self.user     = JSON.parse($window.localStorage.getItem("user")) // Data about connected user
   self.action   = null
   // Form variables
-  self.data = {
-    id      : null,
-    user    : null,
-    gilet   : null,
-    job     : null,
-    password: null
-  }
+  self.data = {}
   self.error   = null
   self.success = null
 
@@ -26,6 +20,21 @@ let settings_controller = function settingsController($http, $state, GlobalConfi
   // Jobs
   $http.get(self.url + 'jobs/all').then((response) => {
     self.jobs = response.data
+  })
+
+  // Teams
+  $http.get(self.url + 'teams/all').then((response) => {
+    self.teams = response.data
+  })
+
+  // Jackets
+  $http.get(self.url + 'jackets/all').then((response) => {
+    self.jackets = response.data
+  })
+
+  // Sensor types
+  $http.get(self.url + 'sensors/all').then((response) => {
+    self.sensors = response.data
   })
 
   // Check user authentication
@@ -50,113 +59,174 @@ let settings_controller = function settingsController($http, $state, GlobalConfi
 
   self.clickAction = function(action) {
     // Reset variables
+      self.success = null
+      self.error = null
+
     if (self.action !== action) {
-      self.action        = action
-      self.data.id       = null
-      self.data.user     = null
-      self.data.gilet    = null
-      self.data.job      = null
-      self.data.password = null
+      self.action = action
+      self.data   = {}
     }
+
+    // Specificities
+    if (self.action === 2) {
+      self.data._id = self.teams[0]._id
+      self.data.new = self.teams[0].name
+    }
+    if (self.action === 3) self.data._id = self.teams[0]._id
+    if (self.action === 4) { 
+      self.data.teamID = self.teams[0]._id
+      self.data.jobID = self.jobs[0]._id
+    }
+    if (self.action === 5) {
+      self.data._id = self.users[0]._id
+      self.chgUser()
+    }
+    if (self.action === 6) self.data._id = self.users[0]._id
+    if (self.action === 7) self.data.userID = self.users[0]._id
+    if (self.action === 8) { 
+      self.data._id    = self.jackets[0]._id
+      self.data.userID = self.jackets[0].userID
+    }
+    if (self.action === 9) self.data._id = self.jackets[0]._id
+    if (self.action === 11) {
+      self.data._id = self.sensors[0]._id
+      self.data.new = self.sensors[0].type
+    }
+    if (self.action === 12) self.data._id = self.sensors[0]._id
   }
 
-  self.userChg = function() {
-    self.data.user  = self.users.find(function(user) { if (user._id == self.data.id) return user }).idUser
-    self.data.gilet = self.users.find(function(user) { if (user._id == self.data.id) return user }).giletid
-    self.data.job   = self.users.find(function(user) { if (user._id == self.data.id) return user }).job
-    self.error      = null
-    self.success    = null
+  self.chgTeam = function () {
+    self.data.new = self.teams.find(function (x) { if (x._id == self.data._id) return x }).name
   }
 
-  self.submit = function() {
+  self.chgUser = function () {
+    self.data.username = self.users.find(function (x) { if (x._id == self.data._id) return x }).username
+    self.data.teamID = self.users.find(function (x) { if (x._id == self.data._id) return x }).teamID
+    self.data.jobID = self.users.find(function (x) { if (x._id == self.data._id) return x }).jobID
+  }
+
+  self.chgJacket = function () {
+    self.data.userID = self.jackets.find(function (x) { if (x._id == self.data._id) return x }).userID
+  }
+
+  self.chgSensor = function () {
+    self.data.new = self.sensors.find(function (x) { if (x._id == self.data._id) return x }).type
+  }
+
+  self.verification = function () {
+    // if (self.action === 1) {
+    //   self.data.teamName
+    // }
+  }
+
+  self.submit = function () {
+    self.verification()
+
     let method = null
-    let data = null
     let url = null
 
     if (self.action === 1) {
-      method = 'PUT'
-      data = {
-        idUser : self.data.user,
-        giletid: self.data.gilet,
-        job    : self.data.job
-      }
-      url = 'users/chgUser'
-    } else if (self.action === 2) {
       method = 'POST'
-      data = {
-        idUser : self.data.user,
-        giletid: self.data.gilet,
-        job    : self.data.job
-      }
-      url = 'users/addUser'
+      url = 'teams/add'
+    } else if (self.action === 2) {
+      method = 'PUT'
+      url = 'teams/update'
     } else if (self.action === 3) {
       method = 'DELETE'
-      data = {
-        id    : self.data.id,
-        idUser: self.data.user
-      }
-      url = 'users/delUser'
+      url = 'teams/delete'
     } else if (self.action === 4) {
-      method = 'PUT'
-      data = {
-        idUser : self.data.user,
-        giletid: self.data.gilet,
-        sender: self.user.job // To make sure that staff cannot erase everybody
-      }
-      url = 'users/chgGilet'
+      method = 'POST'
+      url = 'users/add'
     } else if (self.action === 5) {
-      let id = null
-
-      if (self.user.job === '0') {
-        id = self.data.user
-      } else if (self.job === '2') {
-        id = self.user.idUser
-      }
-
       method = 'PUT'
-      data = {
-        idUser: id,
-        password: self.data.password,
-        sender: self.user.job // To make sure that staff cannot change everything
-      }
-      url = 'users/chgPassword'
+      url = 'users/update'
+    } else if (self.action === 6) {
+      method = 'DELETE'
+      url = 'users/delete'
+    } else if (self.action === 7) {
+      method = 'POST'
+      url = 'jackets/add'
+    } else if (self.action === 8) {
+      method = 'PUT'
+      url = 'jackets/update'
+    } else if (self.action === 9) {
+      method = 'DELETE'
+      url = 'jackets/delete'
+    } else if (self.action === 10) {
+      method = 'POST'
+      url = 'sensors/add'
+    } else if (self.action === 11) {
+      method = 'PUT'
+      url = 'sensors/update'
+    } else if (self.action === 12) {
+      method = 'DELETE'
+      url = 'sensors/delete'
     }
 
-    data.job = data.job === null ? '0' : data.job // By default, job = worker
-    console.log("Data : ", data)
-
+    console.log("Data : ", self.data)
     $http({
       method: method,
       url: self.url + url,
-      data: data,
+      data: self.data,
       headers: {
         'Content-Type': 'application/json'
       }
     }).then((response) => {
+      console.log("Response : ", response)
+
       if (response.status === 200) {
-        self.success = "Information has been successfully updated."
         self.error = null
 
-        // Refresh users data
         if (self.action === 1) {
-          let index = self.users.findIndex(x => x._id === self.data.id)
-          self.users[index].giletid = self.data.gilet
-          self.users[index].job = self.data.job
+          self.success = "A team has been created."
+          self.teams.push(response.data)
         } else if (self.action === 2) {
-          self.users.push(response.data)
+          self.success = "A team has been updated."
+          let index = self.teams.findIndex(x => x._id === self.data._id)
+          self.teams[index].name = self.data.new
         } else if (self.action === 3) {
-          let index = self.users.findIndex(x => x._id === self.data.id)
-          self.users.splice(index, 1)
-          // Reset data
-          self.data.id       = null
-          self.data.user     = null
-          self.data.gilet    = null
-          self.data.job      = null
-          self.data.password = null
-          console.log("User deleted : ", self.users)
+          self.success = "A team has been deleted."
+          let index = self.teams.findIndex(x => x._id === self.data._id)
+          self.data._id = null
+          self.teams.splice(index, 1)
         } else if (self.action === 4) {
-          let index = self.users.findIndex(x => x._id === self.data.id)
-          self.users[index].giletid = self.data.gilet
+          self.success = "A user has been created."
+          self.users.push(response.data)
+        } else if (self.action === 5) {
+          self.success = "A user has been updated."
+          let index = self.users.findIndex(x => x._id === self.data._id)
+          self.users[index].username = self.data.username
+          self.users[index].teamID = self.data.teamID
+          self.users[index].jobID = self.data.jobID
+        } else if (self.action === 6) {
+          self.success = "A user has been deleted."
+          let index = self.users.findIndex(x => x._id === self.data._id)
+          self.data._id = null
+          self.users.splice(index, 1)
+        } else if (self.action === 7) {
+          self.success = "A jacket has been created."
+          self.jackets.push(response.data)
+        } else if (self.action === 8) {
+          self.success = "A jacket has been updated."
+          let index = self.jackets.findIndex(x => x._id === self.data._id)
+          self.jackets[index].userID = self.data.userID
+        } else if (self.action === 9) {
+          self.success = "A jacket has been deleted."
+          let index = self.jackets.findIndex(x => x._id === self.data._id)
+          self.data._id = null
+          self.jackets.splice(index, 1)
+        } else if (self.action === 10) {
+          self.success = "A sensor type has been created."
+          self.sensors.push(response.data)
+        } else if (self.action === 11) {
+          self.success = "A sensor type has been updated."
+          let index = self.sensors.findIndex(x => x._id === self.data._id)
+          self.sensors[index].type = self.data.new
+        } else if (self.action === 12) {
+          self.success = "A sensor has been deleted."
+          let index = self.sensors.findIndex(x => x._id === self.data._id)
+          self.data._id = null
+          self.sensors.splice(index, 1)
         }
       } else {
         self.error = "An error occured."

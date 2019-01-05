@@ -2,62 +2,110 @@
   <a class="navbar-brand col-sm-3 col-md-2 mr-0 cursor text-white" ng-click="stg.clickIndex()">Voxel</a>
   <ul class="navbar-nav px-3">
     <li class="nav-item text-nowrap">
-      <a class="nav-link" href="#!/index">Home</a>
+      <a class="nav-link" href="#!/index"><i class="fa fa-home"></i></a>
     </li>
     <li class="nav-item text-nowrap">
-      <a class="nav-link cursor" ng-click="stg.logout()">Logout</a>
+      <a class="nav-link cursor" ng-click="stg.logout()"><i class="fa fa-power-off"></i></a>
     </li>
   </ul>
 </nav>
 
 <div class="container-fluid global-container">
   <div class="row">
-    <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+    <nav class="col-md-2 d-none d-md-block bg-light sidebar scroll">
       <div class="sidebar-sticky">
 
-        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-          <span>Parameters</span>
-        </h6>
-        <ul class="nav flex-column mb-2">
-          <div ng-if="stg.user.job === '0'">
-            <li class="nav-item">
-            <a class="nav-link" href="" ng-click="stg.clickAction(1)">
-              <span data-feather="file-text"></span>
-              Modify User
-            </a>
+        <!-- target=_self -->
+        <ul class="nav flex-column flex-nowrap">
+          <li class="nav-item">
+                <a class="nav-link collapsed" href="#teamSubMenu" target=_self data-toggle="collapse" data-target="#teamSubMenu"><i class="fa fa-users"></i> Teams</a>
+                <div class="collapse" id="teamSubMenu" aria-expanded="false">
+                    <ul class="flex-column pl-2 nav">
+                        <li class="nav-item">
+                            <a class="nav-link py-0 cursor link" ng-click="stg.clickAction(1)">Add</a>
+                        </li>
+                        <li class="nav-item"> <!-- ng-if="stg.user.job === '0'" -->
+                          <a class="nav-link py-0 cursor link" ng-click="stg.clickAction(2)">Update</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link py-0 cursor link" ng-click="stg.clickAction(3)">Delete</a>
+                        </li>
+                    </ul>
+                </div>
             </li>
-          </div>
-          <li class="nav-item">
-            <a class="nav-link" href="" ng-click="stg.clickAction(2)">
-              <span data-feather="file-text"></span>
-              Add User
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="" ng-click="stg.clickAction(3)">
-              <span data-feather="file-text"></span>
-              Delete User
-            </a>
-          </li>
-          <div ng-if="stg.user.job === '2'"> 
             <li class="nav-item">
-            <a class="nav-link" href="" ng-click="stg.clickAction(4)">
-              <span data-feather="file-text"></span>
-              Change Gilet
-            </a>
-          </li>
-          </div>
-          <li class="nav-item">
-            <a class="nav-link" href="" ng-click="stg.clickAction(5)">
-              <span data-feather="file-text"></span>
-              <div ng-if="stg.user.job === '0'">
-                Change password
-              </div>
-              <div ng-if="stg.user.job === '2'">
-                Change your password
-              </div>
-            </a>
-          </li>
+                <a class="nav-link collapsed" href="#usersSubMenu" target=_self data-toggle="collapse" data-target="#usersSubMenu"><i class="fa fa-vcard"></i> Users</a>
+                <div class="collapse" id="usersSubMenu" aria-expanded="false">
+                    <ul class="flex-column pl-2 nav">
+                        <li class="nav-item">
+                            <a class="nav-link py-0 cursor link" ng-click="stg.clickAction(4)">Add</a>
+                            <!-- <a class="nav-link collapsed py-1" href="#submenu1sub1" target=_self data-toggle="collapse" data-target="#submenu1sub1">Customers</a>
+                            <div class="collapse" id="submenu1sub1" aria-expanded="false">
+                                <ul class="flex-column nav pl-4">
+                                    <li class="nav-item">
+                                        <a class="nav-link p-1">
+                                            <i class="fa fa-fw fa-clock-o"></i> Daily
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link p-1">
+                                            <i class="fa fa-fw fa-dashboard"></i> Dashboard
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link p-1">
+                                            <i class="fa fa-fw fa-bar-chart"></i> Charts
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link p-1">
+                                            <i class="fa fa-fw fa-compass"></i> Areas
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div> -->
+                        </li>
+                        <li class="nav-item"> <!-- ng-if="stg.user.job === '0'" -->
+                          <a class="nav-link py-0 cursor link" ng-click="stg.clickAction(5)">Update</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link py-0 cursor link" ng-click="stg.clickAction(6)">Delete</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#jacketSubMenu" target=_self data-toggle="collapse" data-target="#jacketSubMenu"><i class="fa fa-tag"></i> Jackets</a>
+                <div class="collapse" id="jacketSubMenu" aria-expanded="false">
+                    <ul class="flex-column pl-2 nav">
+                        <li class="nav-item">
+                            <a class="nav-link py-0 cursor link" ng-click="stg.clickAction(7)">Add</a>
+                        </li>
+                        <li class="nav-item"> <!-- ng-if="stg.user.job === '0'" -->
+                          <a class="nav-link py-0 cursor link" ng-click="stg.clickAction(8)">Update</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link py-0 cursor link" ng-click="stg.clickAction(9)">Delete</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#sensorsSubMenu" target=_self data-toggle="collapse" data-target="#sensorsSubMenu"><i class="fa fa-thermometer-half"></i> Sensors</a>
+                <div class="collapse" id="sensorsSubMenu" aria-expanded="false">
+                    <ul class="flex-column pl-2 nav">
+                        <li class="nav-item">
+                            <a class="nav-link py-0 cursor link" ng-click="stg.clickAction(10)">Add</a>
+                        </li>
+                        <li class="nav-item"> <!-- ng-if="stg.user.job === '0'" -->
+                          <a class="nav-link py-0 cursor link" ng-click="stg.clickAction(11)">Update</a>
+                        </li>
+                        <!-- <li class="nav-item">
+                          <a class="nav-link py-0 cursor link" ng-click="stg.clickAction(12)">Delete</a>
+                        </li> -->
+                    </ul>
+                </div>
+            </li>
         </ul>
       </div>
     </nav>
@@ -75,54 +123,137 @@
           {{ stg.success }}
         </div>
 
+        <!-- Add a team -->
         <div class="col-md-12 form-group" ng-show="stg.action === 1">
-          <label>ID user: </label>
-          <select class="form-control" ng-model="stg.data.id" ng-change="stg.userChg()">
-            <option ng-repeat="user in stg.users" ng-if="user.job === '1'" value="{{ user._id }}">{{ user.idUser }}</option>
+          <label>Team name: </label>
+          <input type="text" class="form-control" ng-model="stg.data.name">
+        </div>
+
+        <!-- Update a team -->
+        <div class="col-md-12 form-group" ng-show="stg.action === 2">
+          <label>Team name: </label>
+          <select class="form-control" ng-model="stg.data._id" ng-change="stg.chgTeam()">
+            <option ng-repeat="team in stg.teams" value="{{ team._id }}">{{ team.name }}</option>
           </select>
 
-          <label>Gilet ID: </label>
-          <input type="text" class="form-control" ng-model="stg.data.gilet"></input>
+          <label>New team name: </label>
+          <input type="text" class="form-control" ng-model="stg.data.new">
+        </div>
 
-          <label>Job : </label>
-          <select class="form-control" ng-model="stg.data.job">
-            <option ng-repeat="job in stg.jobs" value="{{ job.job }}">{{ job.name }}</option>
+        <!-- Remove a team -->
+        <div class="col-md-12 form-group" ng-show="stg.action === 3">
+          <label>Team name: </label>
+          <select class="form-control" ng-model="stg.data._id">
+            <option ng-repeat="team in stg.teams" value="{{ team._id }}">{{ team.name }}</option>
           </select>
         </div>
 
-        <div class="col-md-12" ng-show="stg.action === 2">
-          <label>ID user: </label>
-          <input type="text" class="form-control" ng-model="stg.data.user"></input>
+        <!-- Add an user -->
+        <div class="col-md-12 form-group" ng-show="stg.action === 4">
+          <label>Username: </label>
+          <input type="text" class="form-control" ng-model="stg.data.username">
 
-          <label>Gilet ID: </label>
-          <input type="text" class="form-control" ng-model="stg.data.gilet"></input>
-
-          <label>Job : </label>
-          <select class="form-control" ng-model="stg.data.job">
-            <option ng-repeat="job in stg.jobs" value="{{ job.job }}">{{ job.name }}</option>
-          </select>
-        </div>
-
-        <div class="col-md-12" ng-show="stg.action === 3">
-          <label>ID user: </label>
-          <select class="form-control" ng-model="stg.data.id" ng-change="stg.userChg()">
-            <option ng-repeat="user in stg.users" ng-if="user.job === '1'" value="{{ user._id }}">{{ user.idUser }}</option>
-          </select>
-        </div>
-
-        <div class="col-md-12" ng-show="stg.action === 4">
-          <label>ID user: </label>
-          <select class="form-control" ng-model="stg.data.id" ng-change="stg.userChg()">
-            <option ng-repeat="user in stg.users" ng-if="user.job === '1'" value="{{ user._id }}">{{ user.idUser }}</option>
-          </select>
-
-          <label>Gilet ID: </label>
-          <input type="text" class="form-control" ng-model="stg.data.gilet"></input>
-        </div>
-
-        <div class="col-md-12" ng-show="stg.action === 5">
           <label>Password: </label>
-          <input type="text" class="form-control" ng-model="stg.data.spassword"></input>
+          <input type="password" class="form-control" ng-model="stg.data.password">
+
+          <label>Team: </label>
+          <select class="form-control" ng-model="stg.data.teamID">
+            <option ng-repeat="team in stg.teams" value="{{ team._id }}">{{ team.name }}</option>
+          </select>
+
+          <label>Job: </label>
+          <select class="form-control" ng-model="stg.data.jobID">
+            <option ng-repeat="job in stg.jobs" value="{{ job._id }}">{{ job.name }}</option>
+          </select>
+        </div>
+
+        <!-- Update an user -->
+        <div class="col-md-12 form-group" ng-show="stg.action === 5">
+          <label>Username: </label>
+          <select class="form-control" ng-model="stg.data._id" ng-change="stg.chgUser()">
+            <option ng-repeat="user in stg.users" value="{{ user._id }}">{{ user.username }}</option>
+          </select>
+
+          <label>New username: </label>
+          <input type="text" class="form-control" ng-model="stg.data.username">
+
+          <label>New password: </label>
+          <input type="password" class="form-control" ng-model="stg.data.password">
+
+          <label>Team: </label>
+          <select class="form-control" ng-model="stg.data.teamID">
+            <option ng-repeat="team in stg.teams" value="{{ team._id }}">{{ team.name }}</option>
+          </select>
+
+          <label>Job: </label>
+          <select class="form-control" ng-model="stg.data.jobID">
+            <option ng-repeat="job in stg.jobs" value="{{ job._id }}">{{ job.name }}</option>
+          </select>
+        </div>
+
+        <!-- Delete an user -->
+        <div class="col-md-12 form-group" ng-show="stg.action === 6">
+          <label>Username: </label>
+          <select class="form-control" ng-model="stg.data._id">
+            <option ng-repeat="user in stg.users" value="{{ user._id }}">{{ user.username }}</option>
+          </select>
+        </div>
+
+        <!-- Add a jacket -->
+        <div class="col-md-12 form-group" ng-show="stg.action === 7">
+          <label>Identifier: </label>
+          <input type="text" class="form-control" ng-model="stg.data.identifier">
+
+          <label>Assign to: </label>
+          <select class="form-control" ng-model="stg.data.userID">
+            <option ng-repeat="user in stg.users" value="{{ user._id }}">{{ user.username }}</option>
+          </select>
+        </div>
+
+        <!-- Update a jacket -->
+        <div class="col-md-12 form-group" ng-show="stg.action === 8">
+          <label>Jackets: </label>
+          <select class="form-control" ng-model="stg.data._id" ng-change="stg.chgJacket()">
+            <option ng-repeat="jacket in stg.jackets" value="{{ jacket._id }}">{{ jacket.identifier }}</option>
+          </select>
+
+          <label>Assign to: </label>
+          <select class="form-control" ng-model="stg.data.userID">
+            <option ng-repeat="user in stg.users" value="{{ user._id }}">{{ user.username }}</option>
+          </select>
+        </div>
+
+        <!-- Remove a jacket -->
+        <div class="col-md-12 form-group" ng-show="stg.action === 9">
+          <label>Jackets: </label>
+          <select class="form-control" ng-model="stg.data._id">
+            <option ng-repeat="jacket in stg.jackets" value="{{ jacket._id }}">{{ jacket.identifier }}</option>
+          </select>
+        </div>
+
+        <!-- Add a sensor -->
+        <div class="col-md-12 form-group" ng-show="stg.action === 10">
+          <label>Sensor type: </label>
+          <input type="text" class="form-control" ng-model="stg.data.name">
+        </div>
+
+        <!-- Update a sensor -->
+        <div class="col-md-12 form-group" ng-show="stg.action === 11">
+          <label>Sensor type: </label>
+          <select class="form-control" ng-model="stg.data._id" ng-change="stg.chgSensor()">
+            <option ng-repeat="sensor in stg.sensors" value="{{ sensor._id }}">{{ sensor.type }}</option>
+          </select>
+
+          <label>New sensor name: </label>
+          <input type="text" class="form-control" ng-model="stg.data.new">
+        </div>
+
+        <!-- Remove a sensor type -->
+        <div class="col-md-12 form-group" ng-show="stg.action === 12">
+          <label>Sensor type: </label>
+          <select class="form-control" ng-model="stg.data._id">
+            <option ng-repeat="sensor in stg.sensors" value="{{ sensor._id }}">{{ sensor.type }}</option>
+          </select>
         </div>
 
         <div class="col-md-12" ng-if="stg.action !== null">
