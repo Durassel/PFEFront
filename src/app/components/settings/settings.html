@@ -12,19 +12,19 @@
 
 <div class="container-fluid global-container">
   <div class="row">
-    <nav class="col-md-2 d-none d-md-block bg-light sidebar scroll">
+    <nav class="col-md-3 d-none d-md-block col-lg-2 bg-light sidebar scroll">
       <div class="sidebar-sticky">
 
         <!-- target=_self -->
         <ul class="nav flex-column flex-nowrap">
-          <li class="nav-item">
+          <li class="nav-item" ng-if="stg.user.jobID.name === 'Administrator'">
                 <a class="nav-link collapsed" href="#teamSubMenu" target=_self data-toggle="collapse" data-target="#teamSubMenu"><i class="fa fa-users"></i> Teams</a>
                 <div class="collapse" id="teamSubMenu" aria-expanded="false">
                     <ul class="flex-column pl-2 nav">
                         <li class="nav-item">
                             <a class="nav-link py-0 cursor link" ng-click="stg.clickAction(1)">Add</a>
                         </li>
-                        <li class="nav-item"> <!-- ng-if="stg.user.job === '0'" -->
+                        <li class="nav-item">
                           <a class="nav-link py-0 cursor link" ng-click="stg.clickAction(2)">Update</a>
                         </li>
                         <li class="nav-item">
@@ -37,7 +37,7 @@
                 <a class="nav-link collapsed" href="#usersSubMenu" target=_self data-toggle="collapse" data-target="#usersSubMenu"><i class="fa fa-vcard"></i> Users</a>
                 <div class="collapse" id="usersSubMenu" aria-expanded="false">
                     <ul class="flex-column pl-2 nav">
-                        <li class="nav-item">
+                        <li class="nav-item" ng-if="stg.user.jobID.name === 'Administrator' || stg.user.jobID.name === 'Manager'">
                             <a class="nav-link py-0 cursor link" ng-click="stg.clickAction(4)">Add</a>
                             <!-- <a class="nav-link collapsed py-1" href="#submenu1sub1" target=_self data-toggle="collapse" data-target="#submenu1sub1">Customers</a>
                             <div class="collapse" id="submenu1sub1" aria-expanded="false">
@@ -65,44 +65,41 @@
                                 </ul>
                             </div> -->
                         </li>
-                        <li class="nav-item"> <!-- ng-if="stg.user.job === '0'" -->
+                        <li class="nav-item">
                           <a class="nav-link py-0 cursor link" ng-click="stg.clickAction(5)">Update</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" ng-if="stg.user.jobID.name === 'Administrator' || stg.user.jobID.name === 'Manager'">
                           <a class="nav-link py-0 cursor link" ng-click="stg.clickAction(6)">Delete</a>
                         </li>
                     </ul>
                 </div>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" ng-if="stg.user.jobID.name === 'Administrator' || stg.user.jobID.name === 'Manager'">
                 <a class="nav-link collapsed" href="#jacketSubMenu" target=_self data-toggle="collapse" data-target="#jacketSubMenu"><i class="fa fa-tag"></i> Jackets</a>
                 <div class="collapse" id="jacketSubMenu" aria-expanded="false">
                     <ul class="flex-column pl-2 nav">
-                        <li class="nav-item">
+                        <li class="nav-item" ng-if="stg.user.jobID.name === 'Administrator' || stg.user.jobID.name === 'Manager'">
                             <a class="nav-link py-0 cursor link" ng-click="stg.clickAction(7)">Add</a>
                         </li>
-                        <li class="nav-item"> <!-- ng-if="stg.user.job === '0'" -->
+                        <li class="nav-item" ng-if="stg.user.jobID.name === 'Administrator' || stg.user.jobID.name === 'Manager'">
                           <a class="nav-link py-0 cursor link" ng-click="stg.clickAction(8)">Update</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" ng-if="stg.user.jobID.name === 'Administrator' || stg.user.jobID.name === 'Manager'">
                           <a class="nav-link py-0 cursor link" ng-click="stg.clickAction(9)">Delete</a>
                         </li>
                     </ul>
                 </div>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" ng-if="stg.user.jobID.name === 'Administrator' || stg.user.jobID.name === 'Manager'">
                 <a class="nav-link collapsed" href="#sensorsSubMenu" target=_self data-toggle="collapse" data-target="#sensorsSubMenu"><i class="fa fa-thermometer-half"></i> Sensors</a>
                 <div class="collapse" id="sensorsSubMenu" aria-expanded="false">
                     <ul class="flex-column pl-2 nav">
-                        <li class="nav-item">
+                        <li class="nav-item" ng-if="stg.user.jobID.name === 'Administrator' || stg.user.jobID.name === 'Manager'">
                             <a class="nav-link py-0 cursor link" ng-click="stg.clickAction(10)">Add</a>
                         </li>
-                        <li class="nav-item"> <!-- ng-if="stg.user.job === '0'" -->
+                        <li class="nav-item" ng-if="stg.user.jobID.name === 'Administrator' || stg.user.jobID.name === 'Manager'">
                           <a class="nav-link py-0 cursor link" ng-click="stg.clickAction(11)">Update</a>
                         </li>
-                        <!-- <li class="nav-item">
-                          <a class="nav-link py-0 cursor link" ng-click="stg.clickAction(12)">Delete</a>
-                        </li> -->
                     </ul>
                 </div>
             </li>
@@ -169,26 +166,38 @@
 
         <!-- Update an user -->
         <div class="col-md-12 form-group" ng-show="stg.action === 5">
-          <label>Username: </label>
-          <select class="form-control" ng-model="stg.data._id" ng-change="stg.chgUser()">
-            <option ng-repeat="user in stg.users" value="{{ user._id }}">{{ user.username }}</option>
-          </select>
+          <div ng-if="stg.user.jobID.name === 'Administrator' || stg.user.jobID.name === 'Manager'">
+            <label>Username: </label>
+            <select class="form-control" ng-model="stg.data._id" ng-change="stg.chgUser()">
+              <option ng-repeat="user in stg.users" value="{{ user._id }}">{{ user.username }}</option>
+            </select>
+          </div>
 
-          <label>New username: </label>
-          <input type="text" class="form-control" ng-model="stg.data.username">
+          <div ng-if="stg.user.jobID.name === 'Administrator'">
+            <label>New username: </label>
+            <input type="text" class="form-control" ng-model="stg.data.username">
+          </div>
 
-          <label>New password: </label>
-          <input type="password" class="form-control" ng-model="stg.data.password">
+          <div ng-if="stg.user.jobID.name === 'Member'">
+            <label>New password: </label>
+            <input type="password" class="form-control" ng-model="stg.data.password">
+          </div>
 
-          <label>Team: </label>
-          <select class="form-control" ng-model="stg.data.teamID">
-            <option ng-repeat="team in stg.teams" value="{{ team._id }}">{{ team.name }}</option>
-          </select>
+          <!-- Maybe confirm password -->
 
-          <label>Job: </label>
-          <select class="form-control" ng-model="stg.data.jobID">
-            <option ng-repeat="job in stg.jobs" value="{{ job._id }}">{{ job.name }}</option>
-          </select>
+          <div ng-if="stg.user.jobID.name === 'Administrator'">
+            <label>Team: </label>
+            <select class="form-control" ng-model="stg.data.teamID">
+              <option ng-repeat="team in stg.teams" value="{{ team._id }}">{{ team.name }}</option>
+            </select>
+          </div>
+
+          <div ng-if="stg.user.jobID.name === 'Administrator' || stg.user.jobID.name === 'Manager'">
+            <label>Job: </label>
+            <select class="form-control" ng-model="stg.data.jobID">
+              <option ng-repeat="job in stg.jobs" value="{{ job._id }}">{{ job.name }}</option>
+            </select>
+          </div>
         </div>
 
         <!-- Delete an user -->

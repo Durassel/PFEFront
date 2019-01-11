@@ -17,7 +17,8 @@
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
           <span>Users</span>
         </h6>
-        <ul class="nav flex-column mb-2">
+        <loader ng-show="iwc.loader"></loader>
+        <ul class="nav flex-column mb-2" ng-show="!iwc.loader">
           <li class="nav-item" ng-repeat="user in iwc.users">
             <a class="nav-link cursor link" ng-click="iwc.clickUser(user)">
               <span data-feather="file-text"></span>
@@ -32,14 +33,15 @@
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Dashboard</h1>
       </div>
-      <div class="row">
-        <div class="col-md-12" ng-show="iwc.user">
-          <h3>Username : {{ iwc.user.username }}</h3>
-          <p>Jacket : {{ iwc.user.jacket.identifier }}</p>
-          <p>Team : {{ iwc.user.teamID.name }}</p
+      <loader ng-show="iwc.loader_b"></loader>
+      <div class="row" ng-show="!iwc.loader_b">
+        <div class="col-md-12" ng-show="iwc.userSelected">
+          <h3>Username : {{ iwc.userSelected.username }}</h3>
+          <p ng-if="iwc.userSelected.jacket.identifier">Jacket : {{ iwc.userSelected.jacket.identifier }}</p>
+          <p ng-if="iwc.userSelected.teamID.name">Team : {{ iwc.userSelected.teamID.name }}</p>
         </div>
-        <div class="col-md-12" ng-show="iwc.user_data">
-          <div ng-repeat="data in iwc.user_data">
+        <div class="col-md-12" ng-show="iwc.data">
+          <div ng-repeat="data in iwc.data">
             <p>Date : {{ data.date }}</p>
             <p><b>Sensor type : </b> {{ data.sensorID.type }}</p>
             <p>Sensors : </p>

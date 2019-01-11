@@ -13,19 +13,34 @@ let settings_controller = function settingsController($http, $state, GlobalConfi
   self.success = null
 
   // Users
-  $http.get(self.url + 'users/all').then((response) => {
-    self.users = response.data
-  })
+  if (self.user.jobID.name === "Administrator" || self.user.jobID.name === "Manager") {
+    let url = "all"
+    url = self.user.jobID.name === "Manager" ? "team/" + self.user.teamID.name : url
+    $http.get(self.url + 'users/' + url).then((response) => {
+      self.users = response.data
+
+      // Case : team => Format teamID and jobID
+      for (let key in self.users) {
+        self.users[key].teamID = self.users[key].teamID._id
+        self.users[key].jobID = self.users[key].jobID._id
+      }
+    })
+  }
 
   // Jobs
-  $http.get(self.url + 'jobs/all').then((response) => {
+  $http.get(self.url + 'jobs/level/' + self.user.jobID.level).then((response) => {
     self.jobs = response.data
+    console.log("Jobs : ", self.jobs)
   })
 
   // Teams
-  $http.get(self.url + 'teams/all').then((response) => {
-    self.teams = response.data
-  })
+  if (self.user.jobID.name === "Administrator") {
+    $http.get(self.url + 'teams/all').then((response) => {
+      self.teams = response.data
+    })
+  } else  if (self.user.jobID.name === "Manager") { // Can only add user to his own team
+    self.teams = [self.user.teamID]
+  }
 
   // Jackets
   $http.get(self.url + 'jackets/all').then((response) => {
@@ -69,30 +84,30 @@ let settings_controller = function settingsController($http, $state, GlobalConfi
 
     // Specificities
     if (self.action === 2) {
-      self.data._id = self.teams[0]._id
-      self.data.new = self.teams[0].name
+      self.data._id = self.teams[0] ? self.teams[0]._id : null
+      self.data.new = self.teams[0] ? self.teams[0].name : null
     }
-    if (self.action === 3) self.data._id = self.teams[0]._id
+    if (self.action === 3) self.data._id = self.teams[0] ? self.teams[0]._id : null
     if (self.action === 4) { 
-      self.data.teamID = self.teams[0]._id
-      self.data.jobID = self.jobs[0]._id
+      self.data.teamID = self.teams[0] ? self.teams[0]._id : null
+      self.data.jobID = self.jobs[0] ? self.jobs[0]._id : null
     }
     if (self.action === 5) {
-      self.data._id = self.users[0]._id
+      self.data._id = self.users[0] ? self.users[0]._id : null
       self.chgUser()
     }
-    if (self.action === 6) self.data._id = self.users[0]._id
-    if (self.action === 7) self.data.userID = self.users[0]._id
-    if (self.action === 8) { 
-      self.data._id    = self.jackets[0]._id
-      self.data.userID = self.jackets[0].userID
+    if (self.action === 6) self.data._id = self.users[0] ? self.users[0]._id : null
+    if (self.action === 7) self.data.userID = self.users[0] ? self.users[0]._id : null
+    if (self.action === 8) {
+      self.data._id    = self.jackets[0] ? self.jackets[0]._id : null
+      self.data.userID = self.jackets[0] ? self.jackets[0].userID : null
     }
-    if (self.action === 9) self.data._id = self.jackets[0]._id
+    if (self.action === 9) self.data._id = self.jackets[0] ? self.jackets[0]._id : null
     if (self.action === 11) {
-      self.data._id = self.sensors[0]._id
-      self.data.new = self.sensors[0].type
+      self.data._id = self.sensors[0] ? self.sensors[0]._id : null
+      self.data.new = self.sensors[0] ? self.sensors[0].type : null
     }
-    if (self.action === 12) self.data._id = self.sensors[0]._id
+    if (self.action === 12) self.data._id = self.sensors[0] ? self.sensors[0]._id : null
   }
 
   self.chgTeam = function () {
@@ -198,6 +213,11 @@ let settings_controller = function settingsController($http, $state, GlobalConfi
           self.users[index].username = self.data.username
           self.users[index].teamID = self.data.teamID
           self.users[index].jobID = self.data.jobID
+          if (self.user._id === self.data._id) { // Update authenticated user data
+            self.user.jobID._id = self.data.jobID
+            self.user.jobID.name = self.jobs.find(x => x._id === self.data.jobID).name
+            window.localStorage.setItem("user", JSON.stringify(self.user))
+          }
         } else if (self.action === 6) {
           self.success = "A user has been deleted."
           let index = self.users.findIndex(x => x._id === self.data._id)

@@ -4,6 +4,7 @@ require("@uirouter/angularjs");
 require('angular-translate');
 require('angular-translate-loader-partial');
 require('ng-file-upload');
+require('angular-moment');
 
 require("./components/shared/shared.module");
 require("./components/login/login.module");
@@ -17,6 +18,7 @@ const alert_service                  = require("./alert-service.factory");
 console.log(http_error_interceptor_factory);
 angular.module("App", [
     "ui.router",
+    "angularMoment",
     "pascalprecht.translate",
     "SharedModule",
     "LoginModule",

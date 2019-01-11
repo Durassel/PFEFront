@@ -1,8 +1,9 @@
 "use strict";
 
-let index_controller = function indexController($http, $state, GlobalConfigFactory, $element, $window) {
+let index_controller = function indexController($http, $state, GlobalConfigFactory, $element, $window, moment) {
   let self = this;
   self.url = GlobalConfigFactory.url_back;
+  self.user     = JSON.parse($window.localStorage.getItem("user")) // Data about connected user
 
   // Check user authentication
   $http.get(self.url + 'users/authrequired').then((response) => {
@@ -10,8 +11,14 @@ let index_controller = function indexController($http, $state, GlobalConfigFacto
       $window.location.href = '/#!/login';
     }
 
-    $http.get(self.url + 'users/job/Member').then((response) => { // users/all to have all users
+    self.loader = true
+    let url = "all/data"
+    url = self.user.jobID.name === "Manager" ? "team/" + self.user.teamID.name : url
+    url = self.user.jobID.name === "Member" ? self.user._id : url
+    $http.get(self.url + 'users/' + url).then((response) => {
+      self.loader = false
       self.users = response.data
+      console.log("Users : ", self.users)
     })
   })
 
@@ -30,14 +37,23 @@ let index_controller = function indexController($http, $state, GlobalConfigFacto
   
   // Click on a user
   self.clickUser = function(user) {
-    self.user = user
-    $http.get(self.url + 'data/user/' + user.username).then((response) => {
-      self.user_data = response.data
-    })
+    if (self.userSelected !== user) {
+      self.userSelected = user
+      self.loader_b = true
 
-    $http.get(self.url + 'jackets/user/' + user._id).then((response) => {
-      self.user.jacket = response.data
-    })
+      $http.get(self.url + 'data/user/' + user.username).then((response) => {
+        self.loader_b = false
+        self.data = response.data
+        // Convert date format
+        for (let key in self.data) {
+          self.data[key].date = moment(self.data[key].date, "YYYY-MM-DD'T'HH:mm:ss.SSS'Z'").format('DD/MM/YYYY à HH:mm:ss')
+        }
+      })
+
+      $http.get(self.url + 'jackets/user/' + user._id).then((response) => {
+        self.userSelected.jacket = response.data
+      })
+    }
   }
 
   // Test du set de data
@@ -69,7 +85,7 @@ let index_controller = function indexController($http, $state, GlobalConfigFacto
 //   })
 };
 
-index_controller.$inject = ['$http', '$state', 'GlobalConfigFactory', '$element', '$window'];
+index_controller.$inject = ['$http', '$state', 'GlobalConfigFactory', '$element', '$window', 'moment'];
 
 let index = {
     templateUrl: 'app/components/index/index.html',
