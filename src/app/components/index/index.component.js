@@ -41,7 +41,7 @@ let index_controller = function indexController($http, $state, GlobalConfigFacto
       self.userSelected = user
       self.loader_b = true
 
-      $http.get(self.url + 'data/user/' + user.username).then((response) => {
+      $http.get(self.url + 'data/user/' + user._id).then((response) => {
         self.loader_b = false
         self.data = response.data
         // Convert date format
@@ -57,32 +57,37 @@ let index_controller = function indexController($http, $state, GlobalConfigFacto
   }
 
   // Test du set de data
-//   $http({
-//     method: 'POST',
-//     url: self.url + 'data/set',
-//     data: {
-//       "giletid":"0123456789",
-//       "global":[{
-//         "date":"2018-12-22",
-//         "data":[{
-//           "typeId":"000",
-//           "sensors":{
-//             "x1":"8",
-//             "y1":"0",
-//             "z1":"3",
-//             "x2":"9",
-//             "y2":"4",
-//             "z2":"1"
-//           }
-//         }]
-//       }]
-//     },
-//     headers: {
-//       'Content-Type': 'application/json'
-//     }
-//   }).then((response) => {
-//     console.log(response)
-//   })
+  // $http({
+  //   method: 'POST',
+  //   url: self.url + 'data/set',
+  //   data: {
+  //     "id":"0123456789",
+  //     "global":[{
+  //       "date":"2019-01-13 12:24:51.000",
+  //       "data":[{
+  //         "code": "0",
+  //         "sensors":[{
+  //           "x":"0",
+  //           "y":"0",
+  //           "z":"0"
+  //         }, {
+  //           "x":"1",
+  //           "y":"1",
+  //           "z":"1"
+  //         }, {
+  //           "x":"2",
+  //           "y":"2",
+  //           "z":"2"
+  //         }]
+  //       }]
+  //     }]
+  //   },
+  //   headers: {
+  //     'Content-Type': 'application/json'
+  //   }
+  // }).then((response) => {
+  //   console.log(response)
+  // })
 };
 
 index_controller.$inject = ['$http', '$state', 'GlobalConfigFactory', '$element', '$window', 'moment'];
