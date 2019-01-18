@@ -5,6 +5,7 @@ let settings_controller = function settingsController($http, $state, GlobalConfi
 
   self.url = GlobalConfigFactory.url_back;
   self.job = $window.sessionStorage.getItem("job");
+  console.log("job: ",self.job)
   self.idUser = $window.sessionStorage.getItem("idUser");
 
   self.clickModUser = function() {

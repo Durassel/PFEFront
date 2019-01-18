@@ -1,3 +1,24 @@
 {
-    "LOGIN_TEST": "Test FR"
+    "LOGIN_TEST": "Test FR",
+    "ADMIN_LOG": "Login Administrateur",
+    "TXT_LOG": "Entrez votre nom et mot de passe",
+    "TNAME": "Nom",
+    "TPASSWORD": "Mot de passe",
+    "TLOGIN": "Se connecter",
+    "TDASHBOARD":"Tableau de bord",
+    "TSETTINGS":"Paramètres",
+    "TUSERS": "Utilisateurs",
+    "IDUSERS":"ID Utilisateurs",
+    "IDJACKET": "ID Gilet",
+    "DATE": "Date",
+    "SENSORTYPE": "Type de capteur",
+    "SENSORS": "Capteurs",
+    "HOME": "Accueil",
+    "ADD": "Ajouter un utilisateur",
+    "DEL": "Supprimer un utilisateur",
+    "CHGJACKET": "Changer de Gilet",
+    "MODUSER": "Modifier un utilisateur",
+    "CHGPASS": "Changer un mot de passe",
+    "CHGPASSUS": "Changer votre mot de passe",
+    "SUBMIT": "Soumettre"
 }

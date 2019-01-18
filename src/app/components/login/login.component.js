@@ -20,7 +20,7 @@ let login_controller = function loginController($http, $state, $scope, GlobalCon
       if (response.status === 200) {
       	if (response.data) {
           $window.sessionStorage.setItem("idUser",name);
-          $window.sessionStorage.setItem("job",response.data.login);
+          $window.sessionStorage.setItem("job",response.data.job);
         	$window.location.href = '/#!/index';
       	} else {
         	alert("error")

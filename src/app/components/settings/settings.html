@@ -2,7 +2,7 @@
   <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Voxel</a>
   <ul class="navbar-nav px-3">
     <li class="nav-item text-nowrap">
-      <a class="nav-link" href="#!/index">Home</a>
+      <a class="nav-link" href="#!/index">{{ "HOME" | translate}}</a>
     </li>
   </ul>
 </nav>
@@ -13,26 +13,26 @@
       <div class="sidebar-sticky">
 
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-          <span>Parameters</span>
+          <span>{{ "TSETTINGS" | translate}}</span>
         </h6>
         <ul class="nav flex-column mb-2">
           <li class="nav-item">
             <a class="nav-link" href="" ng-click="stg.clickAdd()">
               <span data-feather="file-text"></span>
-              Add User
+              {{ "ADD" | translate}}
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="" ng-click="stg.clickDel()">
               <span data-feather="file-text"></span>
-              Delete User
+              {{ "DEL" | translate}}
             </a>
           </li>
           <div ng-if="stg.job === '2'">
             <li class="nav-item">
             <a class="nav-link" href="" ng-click="stg.clickGilet()">
               <span data-feather="file-text"></span>
-              Change Gilet
+              {{ "CHGJACKET" | translate}}
             </a>
           </li>
           </div>
@@ -40,7 +40,7 @@
             <li class="nav-item">
             <a class="nav-link" href="" ng-click="stg.clickModUser()">
               <span data-feather="file-text"></span>
-              Modify User
+              {{ "MODUSER" | translate}}
             </a>
             </li>
           </div>
@@ -48,10 +48,10 @@
             <a class="nav-link" href="" ng-click="stg.clickPassword()">
               <span data-feather="file-text"></span>
               <div ng-if="stg.job === '0'">
-                Change password
+                {{ "CHGPASS" | translate}}
               </div>
               <div ng-if="stg.job === '2'">
-                Change your password
+                {{ "CHGPASSUS" | translate}}
               </div>
             </a>
           </li>
@@ -61,15 +61,21 @@
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Dashboard</h1>
+        <h1 class="h2">{{ "TDASHBOARD" | translate}}</h1>
       </div>
       <div class="row"><!--form-group-->
         <div class="col-md-12" ng-show="stg.field">
             <div ng-repeat="field in stg.field">
               <label>{{field}}: </label>
-              <input type="text" ng-model=stg.data[field]></input>
+
+              <div ng-if="field === 'password'">
+               <input type="password" ng-model=stg.data[field]></input>
+              </div>
+              <div ng-if="field !== 'password'">
+                <input type="text" ng-model=stg.data[field]></input>
+              </div>
             </div>
-            <button type="submit" class="btn btn-primary" ng-click="stg.submit()">Submit</button>
+            <button type="submit" class="btn btn-primary" ng-click="stg.submit()">{{ "SUBMIT" | translate}}</button>
         </div>
       </div>
     </main>
