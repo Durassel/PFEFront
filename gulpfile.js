@@ -1,18 +1,18 @@
-const gulp = require("gulp");
-const connect = require('gulp-connect');
+const gulp             = require("gulp");
+const connect          = require('gulp-connect');
 
-const copy_task = require("./gulp-tasks/copy-task");
-const css_task = require("./gulp-tasks/css-task");
-const css_vendor_task = require("./gulp-tasks/css_vendor-task");
+const copy_task        = require("./gulp-tasks/copy-task");
+const css_task         = require("./gulp-tasks/css-task");
+const css_vendor_task  = require("./gulp-tasks/css_vendor-task");
 const generate_sw_task = require("./gulp-tasks/generate_sw-task");
-const js_vendors_task = require("./gulp-tasks/js_vendors-task");
-const js_task = require("./gulp-tasks/js-task");
-const html_task = require("./gulp-tasks/html-task");
+const js_vendors_task  = require("./gulp-tasks/js_vendors-task");
+const js_task          = require("./gulp-tasks/js-task");
+const html_task        = require("./gulp-tasks/html-task");
 
-const lib_path = "node_modules";
-const dest_folder = './dist/';
+const lib_path         = "node_modules";
+const dest_folder      = './dist/';
 
-const js_deps = [ "angular", "@uirouter/angularjs"];
+const js_deps          = [ "angular", "@uirouter/angularjs"];
 
 gulp.task("html", html_task({src : ['src/**/*.html'], dest : dest_folder, connect : connect}));
 gulp.task("css", css_task({src : ["src/app/base.sass"], dest : dest_folder + "/app/", connect : connect}));
